@@ -12,9 +12,9 @@ User.destroy_all
 Channel.destroy_all
 
 puts 'Creating channels...'
-south_park = Channel.create!(name: 'South Park')
-chuck_norris = Channel.create!(name: 'Chuck Norris')
-rick_and_morty = Channel.create!(name: 'Rick and Morty')
+south_park = Channel.create!(name: 'South_Park')
+chuck_norris = Channel.create!(name: 'Chuck_Norris')
+rick_and_morty = Channel.create!(name: 'Rick_and_Morty')
 
 puts 'Creating users...'
 users = []
