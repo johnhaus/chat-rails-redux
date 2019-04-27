@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'channels#show'
-  resources :channels, only: [ :show ]
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
@@ -11,4 +8,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :channels, only: [ :show ]
+  root to: 'channels#show'
+
 end
