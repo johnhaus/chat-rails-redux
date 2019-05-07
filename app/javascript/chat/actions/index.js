@@ -18,7 +18,7 @@ export function createMessage(channel, content) {
     method: 'POST',
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
       'X-CSRF-Token': csrfToken
     },
     credentials: 'same-origin',

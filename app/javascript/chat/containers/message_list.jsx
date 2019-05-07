@@ -12,19 +12,38 @@ class MessageList extends Component {
   }
 
   componentDidMount() {
-    // this.refresher = setInterval(this.fetchMessages, 5000);
+    this.subscribeActionCable(this.props);
   }
 
-  componentDidUpdate() {
-    this.list.scrollTop = this.list.scrollHeight;
+  componentWillReceiveProps(nextProps) {
+    if (this.props.selectedChannel != nextProps.selectedChannel) {
+      this.subscribeActionCable(nextProps);
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.refresher);
   }
 
+  componentDidUpdate() {
+    this.list.scrollTop = this.list.scrollHeight;
+  }
+
   fetchMessages = () => {
     this.props.fetchMessages(this.props.selectedChannel);
+  }
+
+  subscribeActionCable = (props) => {
+    App[`channel_${props.selectedChannel}`] = App.cable.subscriptions.create(
+      { channel: 'ChannelsChannel', name: props.selectedChannel },
+      {
+        received: (message) => {
+          if (message.channel === props.selectedChannel) {
+            props.appendMessage(message);
+          }
+        }
+      }
+    );
   }
 
   render () {
@@ -33,23 +52,22 @@ class MessageList extends Component {
         <div className="channel-title">
           <span>Channel #{this.props.selectedChannel}</span>
         </div>
-        <div className="channel-content" ref={(list) => { this.list = list; }}>
+        <div className="channel-content" ref={list => this.list = list}>
           {
             this.props.messages.map((message) => {
-              return <Message key={message.id} message={message} />;
+              return <Message key={message.id} {...message} />;
             })
           }
         </div>
-        <MessageForm />
+        <MessageForm selectedChannel={this.props.selectedChannel} />
       </div>
     );
   }
-}
+};
 
 function mapStateToProps(state) {
   return {
-    messages: state.messages,
-    selectedChannel: state.selectedChannel
+    messages: state.messages
   };
 }
 
