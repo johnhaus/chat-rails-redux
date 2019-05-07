@@ -33,7 +33,7 @@ export function createMessage(channel, content) {
 
 export function selectChannel() {
   return {
-    type: 'CHANNEL_SELECTED',
+    type: 'CHANNEL_SELECTED'
   }
 }
 
