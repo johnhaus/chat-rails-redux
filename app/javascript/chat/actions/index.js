@@ -5,7 +5,7 @@ export function fetchMessages(channel) {
   const promise = fetch(url, { credentials: "same-origin" }).then(r => r.json());
 
   return {
-    type: FETCH_MESSAGES,
+    type: 'FETCH_MESSAGES',
     payload: promise // Will be resolved by redux-promise
   };
 }
