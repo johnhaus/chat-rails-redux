@@ -13,7 +13,7 @@ const chatContainer = document.getElementById('chat_app');
 
 const initialState = {
   messages: [],
-  channels: [ 'south_park', 'chuck_norris', 'rick_and_morty' ],
+  channels: JSON.parse(chatContainer.dataset.channels).map(c => c.name)
 };
 
 const reducers = combineReducers({
